@@ -1,5 +1,7 @@
 ## 2 Finding the best hospital in a state
-
+## Read outcome data
+## Check that state and outcome are valid
+## Return hospital name in that state with lowest 30-day death rate
 best <- function(state, outcome) {
 
     ## Read outcome data
@@ -36,20 +38,18 @@ best <- function(state, outcome) {
             lowest_rate_rows <- valid_state_outcome[valid_state_outcome$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia == lowest_rate, ]
         }
 
-        ## Return hospital name in that state with lowest 30-day death
-        ## rate
+        ## Return hospital name in that state with lowest 30-day death rate
         
         if (is.null(lowest_rate_rows)) {
-            message(paste0( "Error in best(", state , ",", outcome ,"): invalid outcome"))
+            stop("invalid outcome")
         } 
         else {
             # sort by Hospital Name
             sorted_result <- lowest_rate_rows[order(lowest_rate_rows$Hospital.Name),]
-            
             sorted_result[1,]$Hospital.Name
         }
     }
     else{
-        message(paste0( "Error in best(", state , ",", outcome ,"): invalid state"))
+        stop("invalid state")
     }
 }
